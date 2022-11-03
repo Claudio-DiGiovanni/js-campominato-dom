@@ -1,50 +1,62 @@
 const eleGrid = document.querySelector(".grid");
 const eleButton = document.querySelector("button");
+let arrBomb = [];
+let difficultySelect = parseInt(document.querySelector("select").value);
+
 
 eleButton.addEventListener("click", function(){
-    const difficultySelect = document.querySelector("select").value;
+    
+    difficultySelect = parseInt(document.querySelector("select").value);
 
-    if (eleGrid.innerHTML === "") {
-        if (difficultySelect === "easy") {
-            for (let i = 1; i <= 100; i++) {
-                eleCell = document.createElement("div");
-                eleCell.classList.add("cell");
-                eleCell.innerHTML = i
-                eleGrid.append(eleCell)
-                eleCell.addEventListener('click', function () {
-                    this.classList.toggle('active')
-                    console.log("hai selezionato la cella: " + i)
-                });
-        } 
-        } else if (difficultySelect === "medium") {
-            for (let i = 1; i <= 81; i++) {
-                eleCell = document.createElement("div");
-                eleCell.classList.add("cell");
-                eleCell.classList.add("medium")
-                eleCell.innerHTML = i
-                eleGrid.append(eleCell)
-                eleCell.addEventListener('click', function () {
-                    this.classList.toggle('active')
-                    console.log("hai selezionato la cella: " + i)
-                });
-            }
-        } else if (difficultySelect === "hard") {
-            for (let i = 1; i <= 49; i++) {
-                eleCell = document.createElement("div");
-                eleCell.classList.add("cell");
-                eleCell.classList.add("big")
-                eleCell.innerHTML = i
-                eleGrid.append(eleCell) 
-                eleCell.addEventListener('click', function () {
-                    this.classList.toggle('active')
-                    console.log("hai selezionato la cella: " + i)
-                });
-                
-            }
+    arrBomb = []
+    do {
+        let randomNumber = getRandomIntInclusive(1, difficultySelect);
+        if (!arrBomb.includes(randomNumber)){
+           arrBomb.push(randomNumber)
         }
-    } else {
-        console.log("Smetti di premere. Vuoi mica rompere tutto?")
-    }
+        } while (arrBomb.length < 16) 
+
+    eleGrid.innerHTML = "";
+    for (let i = 1; i <= difficultySelect; i++) {
+        eleCell = document.createElement("div");
+        eleCell.classList.add("cell");
+        if (difficultySelect === 81) {
+            eleCell.classList.add("medium")
+        } else if (difficultySelect === 49) {
+            eleCell.classList.add("big")
+        }
+        eleCell.addEventListener('click', function () {
+            this.classList.toggle('active')
+            console.log("hai selezionato la cella: " + i)
+        });
+        eleCell.innerHTML = i
+        eleGrid.append(eleCell)
+
+        if (arrBomb.includes(i)) {
+            eleCell.addEventListener("click", function () {
+                this.style.background = "red"
+            })}
+
+    } 
 
     
+
+    
+    
+
 })
+
+
+
+
+
+
+
+
+
+
+function getRandomIntInclusive(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
