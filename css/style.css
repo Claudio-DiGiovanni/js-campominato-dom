@@ -1,0 +1,63 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    display: flex;
+    height: 100vh;
+    background-color: beige;
+}
+
+.container{
+    margin: auto;
+    height: 100%;
+    margin-top: 7rem;
+    text-align: center;
+}
+
+.grid{
+    display: flex;
+    flex-wrap: wrap;
+    width: 600px;
+    margin: auto;
+    aspect-ratio: 1 / 1;
+}
+
+.cell{
+    border: 1px solid black;
+    width: calc(100% / 10);
+    aspect-ratio: 1 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.cell.medium{
+    width: calc(100% / 9);
+}
+
+.cell.big{
+    width: calc(100% / 7);
+}
+
+.cell.active{
+    background-color: aqua;
+}
+
+button{
+    margin-bottom: 3rem;
+    width: 200px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+select{
+    width: 200px;
+    font-size: 20px;
+    cursor: pointer;
+}
