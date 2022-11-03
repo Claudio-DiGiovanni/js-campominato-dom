@@ -1,56 +1,63 @@
 const eleGrid = document.querySelector(".grid");
 const eleButton = document.querySelector("button");
 let arrBomb = [];
-let difficultySelect = parseInt(document.querySelector("select").value);
+let difficultySelect;
 
+eleButton.addEventListener("click", function () {
 
-eleButton.addEventListener("click", function(){
-    
     difficultySelect = parseInt(document.querySelector("select").value);
 
-    arrBomb = []
+    arrBomb = [];
+
     do {
         let randomNumber = getRandomIntInclusive(1, difficultySelect);
-        if (!arrBomb.includes(randomNumber)){
-           arrBomb.push(randomNumber)
+        if (!arrBomb.includes(randomNumber)) {
+            arrBomb.push(randomNumber)
         }
-        } while (arrBomb.length < 16) 
+    } while (arrBomb.length < 16)
+
+    console.log("Psst, le bombe sono: " + arrBomb)
 
     eleGrid.innerHTML = "";
+    let arrayCell = [];
+
     for (let i = 1; i <= difficultySelect; i++) {
         eleCell = document.createElement("div");
         eleCell.classList.add("cell");
+
         if (difficultySelect === 81) {
             eleCell.classList.add("medium")
+
         } else if (difficultySelect === 49) {
             eleCell.classList.add("big")
         }
-        eleCell.addEventListener('click', function () {
-            this.classList.toggle('active')
-            console.log("hai selezionato la cella: " + i)
-        });
+
         eleCell.innerHTML = i
+        eleCell.id = i
+
+        eleCell.addEventListener('click', function () {
+            this.classList.toggle('active');
+            if (arrBomb.includes(parseInt(this.id))) {
+                console.log('ciao');
+                explode(arrayCell);
+            }
+        });
+
+        
         eleGrid.append(eleCell)
-
-        if (arrBomb.includes(i)) {
-            eleCell.addEventListener("click", function () {
-                this.style.background = "red"
-            })}
-
-    } 
-
-    
-
-    
-    
-
+        arrayCell.push(eleCell)
+    }
 })
 
 
-
-
-
-
+function explode(array) {
+    for(let i = 0; i < arrBomb.length; i++) {
+        console.log('oooh')
+        let valore = arrBomb[i] - 1;
+        let cell = array[valore];
+        cell.style.background = "red";
+    }
+}
 
 
 
